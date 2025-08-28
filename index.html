@@ -10,31 +10,32 @@
 </head>
 
 <body>
-    <h1>Pre-Inscripción Maratón 5k</h1> <img src="./img/Logo.png" id="Logo">
+    <h1>Pre-Inscripción corre-caminata</h1> <img src="./img/Logo.png" id="Logo">
 
     <form id="formulario" action="./API/agregar.php" method="POST">
         <input class="datos" id="inputNombre" name="Nombre_Completo" placeholder="Nombre Completo" required>
         <input class="datos" id="inputEdad" name="Edad" placeholder="Edad" required>
         <input class="datos" id="inputTelefono" name="Teléfono" placeholder="Número de teléfono" required>
         <input class="datos" id="inputCedula" name="Cédula" placeholder="Cédula" required>
-        <select class="" id="inputCategoria" name="Categoria" required>
+        <select class="datos" id="inputCategoria" name="Categoria" required>
             <option value="">Seleccionar Categoría</option>
             <option value=""></option>
             <option value=""></option>
             <option value=""></option>
         </select>
-        <select id="inputGenero" name="Genero" required>
+        <select class="datos" id="inputGenero" name="Genero" required>
             <option value="">Seleccionar Género</option>
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
+            <option value="indefinido">Prefiero no decirlo</option>
         </select>
-        <select id="inputTalla" name="Talla">
+        <select class="datos" id="inputTalla" name="Talla">
             <option value="">Seleccionar Talla</option>
             <option value="S">S</option>
             <option value="M">M</option>
             <option value="L">L</option>
         </select>
-        <select id="inputDistancia" name="Distancia" required>
+        <select class="datos" id="inputDistancia" name="Distancia" required>
             <option value="">Seleccionar Distancia</option>
             <option value="4k">4k</option>
             <option value="8k">8k</option>
