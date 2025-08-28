@@ -44,12 +44,29 @@
             <option value="8km">8km</option>
         </select>
         <input class="datos" id="inputNumero" name="inputNumero" type="number" placeholder="Número de Corredor" required>
-        <button type="submit">Confirma</button>
+        
+        <div class="deslinde-container">
+            <h3>Deslinde de Responsabilidad</h3>
+            <iframe class="deslinde-iframe" src="./Deslinde/deslinde.txt"></iframe>
+            <div class="confirmacion-check">
+                <input type="checkbox" id="confirmacionDeslinde" name="confirmacionDeslinde" required>
+                <label for="confirmacionDeslinde">He leído y acepto los términos del deslinde de responsabilidad</label>
+            </div>
+            <div id="errorDeslinde" class="error-message">
+                Debe aceptar el deslinde de responsabilidad para continuar.
+            </div>
+        </div>
+        
+        <button type="submit" id="submitButton">Confirmar</button>
     </form>
 
+    <div>
+        <input type="text" id="filtrarCorredor" class="filtro-corredor" placeholder="Filtrar por número de corredor" oninput="filtrarInscriptos()">
+    </div>
     <div id="mostrarInscriptos">
     </div>
 
+    <script src="./js/filtrar.js"></script>
     <script src="./js/main.js"></script>
 </body>
 

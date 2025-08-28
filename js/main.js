@@ -1,60 +1,61 @@
 document.addEventListener("DOMContentLoaded", mostrarInscripto);
 
 function mostrarInscripto() {
-    fetch('./API/mostrar.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la respuesta del servidor');
-            }
-            return response.json();
-        })
-        .then(data => {
-            let container = document.getElementById('mostrarInscriptos');
-            container.innerHTML = ""; // Limpiar el contenedor
+  fetch("./API/mostrar.php")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      let container = document.getElementById("mostrarInscriptos");
+      container.innerHTML = ""; // Limpiar el contenedor
 
-            // Verificar si hay datos
-            if (data.length === 0) {
-                container.innerHTML = '<div class="error">No hay inscriptos para mostrar</div>';
-                return;
-            }
+      // Verificar si hay datos
+      if (data.length === 0) {
+        container.innerHTML =
+          '<div class="error">No hay inscriptos para mostrar</div>';
+        return;
+      }
 
-            // Agrupar inscriptos por distancia
-            let inscriptosPorDistancia = {
-                '4km': [],
-                '8km': []
-            };
+      // Agrupar inscriptos por distancia
+      let inscriptosPorDistancia = {
+        "4km": [],
+        "8km": [],
+      };
 
-            data.forEach(inscripto => {
-                if (inscripto.distancia === '4km') {
-                    inscriptosPorDistancia['4km'].push(inscripto);
-                } else if (inscripto.distancia === '8km') {
-                    inscriptosPorDistancia['8km'].push(inscripto);
-                }
-            });
+      data.forEach((inscripto) => {
+        if (inscripto.distancia === "4km") {
+          inscriptosPorDistancia["4km"].push(inscripto);
+        } else if (inscripto.distancia === "8km") {
+          inscriptosPorDistancia["8km"].push(inscripto);
+        }
+      });
 
-            // Crear secciones para cada distancia
-            for (let distancia in inscriptosPorDistancia) {
-                if (inscriptosPorDistancia[distancia].length > 0) {
-                    // Crear contenedor para la distancia
-                    let distanciaSection = document.createElement('div');
-                    distanciaSection.className = 'distancia-section';
-                    
-                    // Título de la sección
-                    let titulo = document.createElement('h2');
-                    titulo.textContent = `Corredores ${distancia}`;
-                    titulo.className = 'distancia-titulo';
-                    distanciaSection.appendChild(titulo);
-                    
-                    // Contenedor para las cards de esta distancia
-                    let cardsContainer = document.createElement('div');
-                    cardsContainer.className = 'cards-container';
-                    
-                    // Crear cards para cada inscripto de esta distancia
-                    inscriptosPorDistancia[distancia].forEach(inscripto => {
-                        let card = document.createElement('div');
-                        card.className = 'card';
+      // Crear secciones para cada distancia
+      for (let distancia in inscriptosPorDistancia) {
+        if (inscriptosPorDistancia[distancia].length > 0) {
+          // Crear contenedor para la distancia
+          let distanciaSection = document.createElement("div");
+          distanciaSection.className = "distancia-section";
 
-                        card.innerHTML = `
+          // Título de la sección
+          let titulo = document.createElement("h2");
+          titulo.textContent = `Corredores ${distancia}`;
+          titulo.className = "distancia-titulo";
+          distanciaSection.appendChild(titulo);
+
+          // Contenedor para las cards de esta distancia
+          let cardsContainer = document.createElement("div");
+          cardsContainer.className = "cards-container";
+
+          // Crear cards para cada inscripto de esta distancia
+          inscriptosPorDistancia[distancia].forEach((inscripto) => {
+            let card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
                             <p><strong>${inscripto.nombre_completo}</strong></p>
                             <p><span class="field-label">Edad:</span> ${inscripto.edad} años</p>
                             <p><span class="field-label">Teléfono:</span> ${inscripto.nmro_teléfono}</p>
@@ -66,17 +67,66 @@ function mostrarInscripto() {
                             <p><span class="field-label">Número de Corredor:</span> ${inscripto.nmro_corredor}</p>
                         `;
 
-                        cardsContainer.appendChild(card);
-                    });
-                    
-                    distanciaSection.appendChild(cardsContainer);
-                    container.appendChild(distanciaSection);
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error al cargar los inscriptos:', error);
-            let container = document.getElementById('mostrarInscriptos');
-            container.innerHTML = `<div class="error">Error al cargar los datos: ${error.message}</div>`;
-        });
+            cardsContainer.appendChild(card);
+          });
+
+          distanciaSection.appendChild(cardsContainer);
+          container.appendChild(distanciaSection);
         }
+      }
+    })
+    .catch((error) => {
+      console.error("Error al cargar los inscriptos:", error);
+      let container = document.getElementById("mostrarInscriptos");
+      container.innerHTML = `<div class="error">Error al cargar los datos: ${error.message}</div>`;
+    });
+}
+
+// // Función para mostrar alertas basadas en parámetros de URL
+// function mostrarAlertas() {
+//   const urlParams = new URLSearchParams(window.location.search);
+
+//   if (urlParams.has("error")) {
+//     const errorType = urlParams.get("error");
+//     let mensaje = "";
+
+//     switch (errorType) {
+//       case "deslinde":
+//         mensaje =
+//           "Debe aceptar el deslinde de responsabilidad para inscribirse";
+//         break;
+//       case "edad":
+//         mensaje = "Edad no válida. Debe tener entre 1 y 150 años";
+//         break;
+//       case "conexion":
+//         mensaje = "Error de conexión con la base de datos";
+//         break;
+//       case "metodo":
+//         mensaje = "Método no permitido";
+//         break;
+//       case "preparacion":
+//         mensaje = "Error al preparar la consulta";
+//         break;
+//       case "insercion":
+//         mensaje = "Error al insertar el registro en la base de datos";
+//         break;
+//       default:
+//         mensaje = "Error desconocido";
+//     }
+
+//     alert(mensaje);
+
+//     // Limpiar el parámetro de error de la URL
+//     window.history.replaceState({}, document.title, window.location.pathname);
+//   }
+
+//   if (urlParams.has("success")) {
+//     alert("¡Inscripción realizada con éxito!");
+
+//     // Limpiar el parámetro de éxito de la URL
+//     window.history.replaceState({}, document.title, window.location.pathname);
+//   }
+// }
+
+// // Ejecutar cuando se cargue la página
+// document.addEventListener("DOMContentLoaded", mostrarAlertas);
