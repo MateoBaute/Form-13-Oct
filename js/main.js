@@ -20,15 +20,15 @@ function mostrarInscripto() {
 
             // Agrupar inscriptos por distancia
             let inscriptosPorDistancia = {
-                '4k': [],
-                '8k': []
+                '4km': [],
+                '8km': []
             };
 
             data.forEach(inscripto => {
-                if (inscripto.distancia === '4k') {
-                    inscriptosPorDistancia['4k'].push(inscripto);
-                } else if (inscripto.distancia === '8k') {
-                    inscriptosPorDistancia['8k'].push(inscripto);
+                if (inscripto.distancia === '4km') {
+                    inscriptosPorDistancia['4km'].push(inscripto);
+                } else if (inscripto.distancia === '8km') {
+                    inscriptosPorDistancia['8km'].push(inscripto);
                 }
             });
 
@@ -63,6 +63,7 @@ function mostrarInscripto() {
                             <p><span class="field-label">Género:</span> ${inscripto.género}</p>
                             <p><span class="field-label">Talla:</span> ${inscripto.talla}</p>
                             <p><span class="field-label">Distancia:</span> ${inscripto.distancia}</p>
+                            <p><span class="field-label">Número de Corredor:</span> ${inscripto.nmro_corredor}</p>
                         `;
 
                         cardsContainer.appendChild(card);
@@ -78,4 +79,4 @@ function mostrarInscripto() {
             let container = document.getElementById('mostrarInscriptos');
             container.innerHTML = `<div class="error">Error al cargar los datos: ${error.message}</div>`;
         });
-}
+        }

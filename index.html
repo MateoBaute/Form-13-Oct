@@ -13,10 +13,10 @@
     <h1>Pre-Inscripción corre-caminata</h1> <img src="./img/Logo.png" id="Logo">
 
     <form id="formulario" action="./API/agregar.php" method="POST">
-        <input class="datos" id="inputNombre" name="Nombre_Completo" placeholder="Nombre Completo" required>
-        <input class="datos" id="inputEdad" name="Edad" placeholder="Edad" required>
-        <input class="datos" id="inputTelefono" name="Teléfono" placeholder="Número de teléfono" required>
-        <input class="datos" id="inputCedula" name="Cédula" placeholder="Cédula" required>
+        <input class="datos" type="text" id="inputNombre" name="Nombre_Completo" placeholder="Nombre Completo" required>
+        <input class="datos" type="number" id="inputEdad" name="Edad" placeholder="Edad" required>
+        <input class="datos" type="tel" id="inputTelefono" name="Teléfono" placeholder="Número de teléfono" required>
+        <input class="datos" type="text" id="inputCedula" name="Cédula" placeholder="Cédula" required>
         <select class="datos" id="inputCategoria" name="Categoria" required>
             <option value="">Seleccionar Categoría</option>
             <option value=""></option>
@@ -40,9 +40,10 @@
         </select>
         <select class="datos" id="inputDistancia" name="Distancia" required>
             <option value="">Seleccionar Distancia</option>
-            <option value="4k">4k</option>
-            <option value="8k">8k</option>
+            <option value="4km">4km</option>
+            <option value="8km">8km</option>
         </select>
+        <input class="datos" id="inputNumero" name="inputNumero" type="number" placeholder="Número de Corredor" required>
         <button type="submit">Confirma</button>
     </form>
 

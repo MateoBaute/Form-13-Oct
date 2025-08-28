@@ -36,6 +36,7 @@ $categoria = trim($_POST['Categoria'] ?? '');
 $genero = trim($_POST['Genero'] ?? '');
 $talla = trim($_POST['Talla'] ?? '');
 $distancia = trim($_POST['Distancia'] ?? '');
+$nmro_corredor = trim($_POST['inputNumero'] ?? ''); 
 
 // Validaciones adicionales
 if ($edad <= 0 || $edad > 150) {
@@ -45,8 +46,8 @@ if ($edad <= 0 || $edad > 150) {
 }
 
 // Preparar la consulta INSERT con parámetros para prevenir inyección SQL
-$sql = "INSERT INTO `inscripto` (`nombre_completo`, `edad`, `nmro_teléfono`, `cédula`, `categoría`, `género`, `talla`, `distancia`) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO `inscripto` (`nombre_completo`, `edad`, `nmro_teléfono`, `cédula`, `categoría`, `género`, `talla`, `distancia`, `nmro_corredor`)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $mysqli->prepare($sql);
 
