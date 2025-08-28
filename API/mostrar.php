@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 
 // Conexión a la base de datos
-$mysqli = new mysqli("localhost", "root", "", "pre-inscripción");
+$mysqli = new mysqli("localhost", "root", "", "inscriptos");
 
 if ($mysqli->connect_errno) {
     http_response_code(500);

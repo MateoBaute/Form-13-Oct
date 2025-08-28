@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 
 // Conexión a la base de datos
-$mysqli = new mysqli("localhost", "root", "", "pre-inscripción");
+$mysqli = new mysqli("localhost", "root", "", "inscriptos");
 
 if ($mysqli->connect_errno) {
     http_response_code(500);
@@ -18,20 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Validar que todos los campos requeridos estén presentes en $_POST
-$camposRequeridos = ['Nombre_Completo', 'Edad', 'Teléfono', 'Cédula'];
-foreach ($camposRequeridos as $campo) {
-    if (!isset($_POST[$campo]) || empty(trim($_POST[$campo]))) {
-        http_response_code(400);
-        echo json_encode(["error" => "Campo requerido faltante: " . $campo]);
-        exit();
-    }
-}
+// $camposRequeridos = ['Nombre_Completo', 'Edad', 'Teléfono', 'Cédula', 'Categoria', 'Genero', 'Talla', 'Distancia'];
+// foreach ($camposRequeridos as $campo) {
+//     if (!isset($_POST[$campo]) || empty(trim($_POST[$campo]))) {
+//         http_response_code(400);
+//         echo json_encode(["error" => "Campo requerido faltante: " . $campo]);
+//         exit();
+//     }
+// }
 
 // Sanitizar los datos de entrada
 $nombreCompleto = trim($_POST['Nombre_Completo']);
 $edad = intval($_POST['Edad']);
 $telefono = trim($_POST['Teléfono']);
 $cedula = trim($_POST['Cédula']);
+$categoria = trim($_POST['Categoria'] ?? '');
+$genero = trim($_POST['Genero'] ?? '');
+$talla = trim($_POST['Talla'] ?? '');
+$distancia = trim($_POST['Distancia'] ?? '');
 
 // Validaciones adicionales
 if ($edad <= 0 || $edad > 150) {
@@ -41,9 +45,8 @@ if ($edad <= 0 || $edad > 150) {
 }
 
 // Preparar la consulta INSERT con parámetros para prevenir inyección SQL
-$sql = "INSERT INTO `inscripto` (`Nombre_Completo`, `Edad`, `Teléfono`, `Cédula`) 
-        VALUES (?, ?, ?, ?)";
-        
+$sql = "INSERT INTO `inscripto` (`nombre_completo`, `edad`, `nmro_teléfono`, `cédula`, `categoría`, `género`, `talla`, `distancia`) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $mysqli->prepare($sql);
 
@@ -54,12 +57,13 @@ if (!$stmt) {
 }
 
 // Vincular parámetros (s = string, i = integer)
-$stmt->bind_param("siss", $nombreCompleto, $edad, $telefono, $cedula);
+$stmt->bind_param("sissssss", $nombreCompleto, $edad, $telefono, $cedula, $categoria, $genero, $talla, $distancia);
 
 // Ejecutar la consulta
 if ($stmt->execute()) {
-    // Éxito al insertar
-    window.location.href = "https://www.google.com";
+    // Éxito al insertar - redirigir usando header()
+    header("Location: ../Index.html");
+    exit();
 } else {
     // Error al insertar
     http_response_code(500);
@@ -72,4 +76,4 @@ if ($stmt->execute()) {
 // Cerrar statement y conexión
 $stmt->close();
 $mysqli->close();
-?>
+?><?php
